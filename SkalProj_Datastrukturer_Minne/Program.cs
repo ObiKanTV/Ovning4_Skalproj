@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SkalProj_Datastrukturer_Minne
 {
-        // Frågor 1-3 här nedan. 
-        // Som i exemplet under dessa frågor har du två exempel, den första så deklarerar du values i klassnivå,
-        // du deklarerar då två Integers vilket blir value types och dom lagras på stacken. 
-        // När du lagrar en integer på stacken och sen säger y = x och sen ändrar på y = 4 så ändras inte x för det är inte en referens. 
-        // När du istället deklarerar som i det undre exemplet så skapar man ett ebject som är av typen referens, 
-        // du använde new Int förut vilket var value type, nu refererar du till något annat i din kod. 
-        // Så i det andra exemplet så pekar y och x på samma referens i heap, ändrar du då y till 4 så ändras också x. 
-        // Skillnaden mellan stack och heap är då att stacken behåller värdet för x tills du ändrar det, när du sen säger att y = x så är det inte samma värde utan en kopia. 
-        // Stacken är också lokal, medans heapen är global. Du kommer alltså bara åt en value type innanför scopet på t.ex klassen,
-        // men du kan referera till ett object i heapen globalt.
+    // Frågor 1-3 här nedan. 
+    // Som i exemplet under dessa frågor har du två exempel, den första så deklarerar du values i klassnivå,
+    // du deklarerar då två Integers vilket blir value types och dom lagras på stacken. 
+    // När du lagrar en integer på stacken och sen säger y = x och sen ändrar på y = 4 så ändras inte x för det är inte en referens. 
+    // När du istället deklarerar som i det undre exemplet så skapar man ett ebject som är av typen referens, 
+    // du använde new Int förut vilket var value type, nu refererar du till något annat i din kod. 
+    // Så i det andra exemplet så pekar y och x på samma referens i heap, ändrar du då y till 4 så ändras också x. 
+    // Skillnaden mellan stack och heap är då att stacken behåller värdet för x tills du ändrar det, när du sen säger att y = x så är det inte samma värde utan en kopia. 
+    // Stacken är också lokal, medans heapen är global. Du kommer alltså bara åt en value type innanför scopet på t.ex klassen,
+    // men du kan referera till ett object i heapen globalt.
     class Program
     {
 
@@ -89,6 +90,7 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
             bool isModdingList = true;
+            List<string> theList = new List<string>();
 
             Console.WriteLine("--------------------------------Welcome--------------------------------");
             Console.WriteLine("\nTo add something to the list type + followed by its name. e.g +Adam");
@@ -97,28 +99,54 @@ namespace SkalProj_Datastrukturer_Minne
             Console.WriteLine("\n======================================================================");
 
             do
-	        {
+            {
 
-              List<string> theList = new List<string>();
-              string input = Console.ReadLine();
-              char nav = input[0];
-              
-              if ()
-	          {
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string navString = nav.ToString();
+                string valString = navString.ToUpper();
+                if (valString == "Q")
+                {
+                    isModdingList = false;
+                }
 
-	          }
-              string value = input.substring(1);
-              
-              switch(nav){...}
+                string value = input.Substring(1);
+                if (value.Length > 10)
+                {
+                    Console.WriteLine("Please specify a name under 10 characters.");
+                    break;
+                }
+                else if (value.Length < 2)
+                {
+                    Console.WriteLine("Please specify a name longer than 1 character.");
+                    break;
+                }
+                switch (nav)
+                {
+                    case '+':
+                        theList.Add(value);
+
+                        break;
+                    case '-':
+                        theList.Remove(value);
+
+                        break;
 
 
+                    default:
+                        Console.WriteLine("I want you to input a + or - unless you want to quit, then Q.");
+                        break;
+                }
 
-	        } while (isModdingList);
-
+            } while (isModdingList);
 
 
 
         }
+
+
+
+
 
         /// <summary>
         /// Examines the datastructure Queue
@@ -155,5 +183,10 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
     }
+
 }
+
+
+
+
 
