@@ -105,7 +105,7 @@ namespace SkalProj_Datastrukturer_Minne
             // 4. troligtvis för att inte behöva reservera minne varje gång du vill lägga till något i listan, därför så reserverar den när det behövs istället.
             // 5. Nej, Capacity minskar inte om man använder List.Remove() 
             // 6. när man vet att det inte kommer vara mer i den listan än antalet man definerar. 
-                  // Då kan du i förväg reservera just den summan och inte använda onödigt mycket reserverat minne
+            // Då kan du i förväg reservera just den summan och inte använda onödigt mycket reserverat minne
             do
             {
                 string? input = Console.ReadLine();
@@ -174,9 +174,6 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
 
-
-
-
         /// <summary>
         /// Examines the datastructure Queue
         /// </summary>
@@ -187,6 +184,90 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+
+
+            // Jag gjorde ingen TestQueue, provade istället med samma logik som förra uppgiften att lägga till och ta bort.
+            // Använde förra som mall för denna, kastade om koden lite för att få den att funka här med.
+            // Koden valideras nu också, du kan lägga till och ta bort från kön. 
+            bool isQueueing = true;
+            Queue<string> queue = new Queue<string>();
+
+            Console.Clear();
+            Console.WriteLine("===================ICA======================\n"
+                + "Welcome to ICA, You can enter people into the store with the + and a name\ne.g. +Rulle" +
+                "or you can serve the one first in line with -. type Q/q to quit to Main Menu");
+            // I did some copy paste with my previous code, Normally I would've made a validate Method with all these validations, but this time no.
+            do
+            {
+                string? input = Console.ReadLine();
+
+                if (input == null)
+                {
+                    throw new Exception("Must Input a +/- followed by a name e.g. +Anna");
+                }
+                input = input.Trim();
+                char nav = input[0];
+
+
+                string navString = nav.ToString(); // this validation is to make sure you can type Q or q as well to exit.   
+                string valString = navString.ToUpper(); // I'm sure I could've done this better. Will come back later.
+
+                string value = input.Substring(1);
+                if (valString == "Q")
+                {
+                    Console.Clear();
+                    isQueueing = false;
+                }
+                else
+                {
+
+                    switch (nav)
+                    {
+                        case '+':
+                            if (value.Length > 10) // several validation to make sure the user input is correct
+                            {
+                                Console.WriteLine("Please specify a name under 10 characters.");
+                                break;
+                            }
+                            else if (value.Length < 2)
+                            {
+                                Console.WriteLine("Please specify a name longer than 1 character.");
+                                break;
+                            }
+                            else if (String.IsNullOrWhiteSpace(value))
+                            {
+                                Console.WriteLine("You need to add a word. e.g +Adam or -Adam");
+                            }
+                            else
+                            {
+                                Console.Clear(); // Console Clears are to make things easier to read. I hate cluttered consoles. even just for testing.
+                                queue.Enqueue(value);
+                                Console.WriteLine($"{value} has now entered our store, They grabbed what they wanted from the shelves and is now in Queue." +
+                                    " You can continue queue/dequeue people or Q/q to quit to Main Menu");
+                            }
+                            break;
+                        case '-':
+
+                            if (queue.TryDequeue(out value!)) // added an if-statement here to make sure the user actually removes something and tells the user if they did. 
+                            {
+                                Console.WriteLine($"{value} have successfully been served and is now leaving our store.\nYou can continue to queue/dequeue people or" +
+                                    "press Q/q to exit to the Main Menu");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"There was no person in the store, You can add someone with the + followed by a Name e.g. +Jocke or Q/q to exit.");
+                            }
+                            break;
+
+                        default:
+                            Console.WriteLine("I want you to input a + or - followed by a Name e.g. +Penny. Unless you want to quit, then Q/q.");
+                            break;
+                    }
+                }
+
+            } while (isQueueing);
+
         }
 
         /// <summary>
