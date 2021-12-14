@@ -92,15 +92,22 @@ namespace SkalProj_Datastrukturer_Minne
             bool isModdingList = true;
             List<string> theList = new List<string>();
             // prints a very nice menu
-            Console.WriteLine($"--------------------------------Welcome--------------------------------"+
-                               "\nTo add something to the list type + followed by its name. e.g +Adam"+
-                               "\nTo remove something, simply type - followed by its name. e.g -Adam"+
-                               "\nTo exit back to the menu, type Q/q"+
+            Console.WriteLine($"--------------------------------Welcome--------------------------------" +
+                               "\nTo add something to the list type + followed by its name. e.g +Adam" +
+                               "\nTo remove something, simply type - followed by its name. e.g -Adam" +
+                               "\nTo exit back to the menu, type Q/q" +
                                "\n=====================================================================");
 
+
+            // Svar på frågor Övning 1: ExamineList()
+            // 2. arrayen ökar capacity varje gång du försöker lägga till något men arrayen är full
+            // 3. den ökar då med sig själv. Alltså dubblar arrayens storlek. array x2.
+            // 4. troligtvis för att inte behöva reservera minne varje gång du vill lägga till något i listan, därför så reserverar den när det behövs istället.
+            // 5. Nej, Capacity minskar inte om man använder List.Remove() 
+            // 6. när man vet att det inte kommer vara mer i den listan än antalet man definerar. 
+                  // Då kan du i förväg reservera just den summan och inte använda onödigt mycket reserverat minne
             do
             {
-
                 string? input = Console.ReadLine();
 
                 if (input == null)
@@ -111,7 +118,7 @@ namespace SkalProj_Datastrukturer_Minne
                 char nav = input[0];
 
 
-                string navString = nav.ToString();
+                string navString = nav.ToString(); // this validation is to make sure you can type Q or q as well to exit. I'm sure I could've done this better. Will come back later.
                 string valString = navString.ToUpper();
 
                 string value = input.Substring(1);
@@ -120,7 +127,7 @@ namespace SkalProj_Datastrukturer_Minne
                     Console.Clear();
                     isModdingList = false;
                 }
-                else if (value.Length > 10)
+                else if (value.Length > 10) // several validation to make sure the user input is correct
                 {
                     Console.WriteLine("Please specify a name under 10 characters.");
                     break;
@@ -137,15 +144,14 @@ namespace SkalProj_Datastrukturer_Minne
                 switch (nav)
                 {
                     case '+':
-                        Console.Clear();
+                        Console.Clear(); // Console Clears are to make things easier to read. I hate cluttered consoles. even just for testing.
                         theList.Add(value);
                         Console.WriteLine($"Added {value} to the List. You can continue add/remove from the list or Q/q to quit to Main Menu");
 
                         break;
                     case '-':
 
-
-                        if (theList.Remove(value))
+                        if (theList.Remove(value)) // added an if-statement here to make sure the user actually removes something and tells the user if they did. 
                         {
                             Console.WriteLine($"{value} has been succesfully removed from the list\nYou can continue to add/remove from the list or" +
                                 "press Q/q to exit to the Main Menu");
@@ -154,12 +160,10 @@ namespace SkalProj_Datastrukturer_Minne
                         {
                             Console.WriteLine($"Could not remove {value} from the list, are you sure you typed it correctly?");
                         }
-
                         break;
 
-
                     default:
-                        Console.WriteLine("I want you to input a + or - unless you want to quit, then Q/q.");
+                        Console.WriteLine("I want you to input a + or - followed by a word e.g. +Pie. Unless you want to quit, then Q/q.");
                         break;
                 }
 
