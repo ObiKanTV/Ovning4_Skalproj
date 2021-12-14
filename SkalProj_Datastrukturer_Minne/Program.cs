@@ -98,7 +98,7 @@ namespace SkalProj_Datastrukturer_Minne
                                "\nTo exit back to the menu, type Q/q" +
                                "\n=====================================================================");
 
-
+            // notering, använde mig inte av Capacity Metoden, Capacity syns i debuggern om du har theList på view under RAW. 
             // Svar på frågor Övning 1: ExamineList()
             // 2. arrayen ökar capacity varje gång du försöker lägga till något men arrayen är full
             // 3. den ökar då med sig själv. Alltså dubblar arrayens storlek. array x2.
