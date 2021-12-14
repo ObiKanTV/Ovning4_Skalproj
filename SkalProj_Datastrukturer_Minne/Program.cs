@@ -91,18 +91,26 @@ namespace SkalProj_Datastrukturer_Minne
             */
             bool isModdingList = true;
             List<string> theList = new List<string>();
-
-            Console.WriteLine("--------------------------------Welcome--------------------------------");
-            Console.WriteLine("\nTo add something to the list type + followed by its name. e.g +Adam");
-            Console.WriteLine("\nTo remove something, simply type - followed by its name. e.g -Adam");
-            Console.WriteLine("\nTo exit back to the menu, type Q/q");
-            Console.WriteLine("\n======================================================================");
+            // prints a very nice menu
+            Console.WriteLine($"--------------------------------Welcome--------------------------------"+
+                               "\nTo add something to the list type + followed by its name. e.g +Adam"+
+                               "\nTo remove something, simply type - followed by its name. e.g -Adam"+
+                               "\nTo exit back to the menu, type Q/q"+
+                               "\n=====================================================================");
 
             do
             {
 
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
+
+                if (input == null)
+                {
+                    throw new Exception("Must Input a +/- followed by a word or name e.g. +Banana");
+                }
+                input = input.Trim();
                 char nav = input[0];
+
+
                 string navString = nav.ToString();
                 string valString = navString.ToUpper();
 
@@ -122,17 +130,33 @@ namespace SkalProj_Datastrukturer_Minne
                     Console.WriteLine("Please specify a name longer than 1 character.");
                     break;
                 }
+                else if (String.IsNullOrWhiteSpace(value))
+                {
+                    Console.WriteLine("You need to add a word. e.g +Apple or -Adam");
+                }
                 switch (nav)
                 {
                     case '+':
+                        Console.Clear();
                         theList.Add(value);
+                        Console.WriteLine($"Added {value} to the List. You can continue add/remove from the list or Q/q to quit to Main Menu");
 
                         break;
                     case '-':
-                        theList.Remove(value);
+
+
+                        if (theList.Remove(value))
+                        {
+                            Console.WriteLine($"{value} has been succesfully removed from the list\nYou can continue to add/remove from the list or" +
+                                "press Q/q to exit to the Main Menu");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Could not remove {value} from the list, are you sure you typed it correctly?");
+                        }
 
                         break;
-                    
+
 
                     default:
                         Console.WriteLine("I want you to input a + or - unless you want to quit, then Q/q.");
