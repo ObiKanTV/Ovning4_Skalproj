@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace SkalProj_Datastrukturer_Minne
@@ -280,6 +281,34 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            // Svar på fråga 3.1: Om man använder en stack här istället för Kö, så tar den bort den som senast lades till,
+            // vilket betyder att Kalle som va först i kön får vänta och eventuellt så får han inte komma hem alls.
+            ReverseText();
+        }
+
+        private static void ReverseText()
+        {
+            // Tried making this as simple as I could. I doubt Stacks are the most effecient way of reversing a string though.
+            var revString = "";
+            Console.WriteLine("Please enter a text you would like to reverse.");
+            string? input = Console.ReadLine();
+            if (!String.IsNullOrWhiteSpace(input))
+            {
+               input = input.Trim();
+                Stack rTSStack = new Stack();
+                foreach (char c in input)
+                {
+                    rTSStack.Push(c);
+                }
+                while (rTSStack.Count > 0)
+                {
+                    revString += rTSStack.Pop();
+                }
+                    Console.WriteLine($"This is what I got: {revString}");
+            }
+            else { Console.WriteLine("You must enter a valid text"); }
+            
         }
 
         static void CheckParanthesis()
