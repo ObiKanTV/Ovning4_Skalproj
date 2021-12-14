@@ -308,7 +308,7 @@ namespace SkalProj_Datastrukturer_Minne
                     Console.WriteLine($"This is what I got: {revString}");
             }
             else { Console.WriteLine("You must enter a valid text"); }
-            
+
         }
 
         static void CheckParanthesis()
@@ -318,6 +318,10 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+
+
+            // ToDo: Make a plan in Corel for taking a string, making a char array, foreach loop to loop until it hits a {/(/[/]/)/} and then check so that the next one
+            // is also of the same type. I will probably need several nested if-statements in the foreach loop. 
 
         }
 
