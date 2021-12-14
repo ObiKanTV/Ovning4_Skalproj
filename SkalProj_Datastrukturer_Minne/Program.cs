@@ -95,7 +95,7 @@ namespace SkalProj_Datastrukturer_Minne
             Console.WriteLine("--------------------------------Welcome--------------------------------");
             Console.WriteLine("\nTo add something to the list type + followed by its name. e.g +Adam");
             Console.WriteLine("\nTo remove something, simply type - followed by its name. e.g -Adam");
-            Console.WriteLine("\nTo exit back to the menu, type Q");
+            Console.WriteLine("\nTo exit back to the menu, type Q/q");
             Console.WriteLine("\n======================================================================");
 
             do
@@ -105,13 +105,14 @@ namespace SkalProj_Datastrukturer_Minne
                 char nav = input[0];
                 string navString = nav.ToString();
                 string valString = navString.ToUpper();
-                if (valString == "Q")
-                {
-                    isModdingList = false;
-                }
 
                 string value = input.Substring(1);
-                if (value.Length > 10)
+                if (valString == "Q")
+                {
+                    Console.Clear();
+                    isModdingList = false;
+                }
+                else if (value.Length > 10)
                 {
                     Console.WriteLine("Please specify a name under 10 characters.");
                     break;
@@ -131,10 +132,10 @@ namespace SkalProj_Datastrukturer_Minne
                         theList.Remove(value);
 
                         break;
-
+                    
 
                     default:
-                        Console.WriteLine("I want you to input a + or - unless you want to quit, then Q.");
+                        Console.WriteLine("I want you to input a + or - unless you want to quit, then Q/q.");
                         break;
                 }
 
