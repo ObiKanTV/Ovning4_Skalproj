@@ -324,6 +324,8 @@ namespace SkalProj_Datastrukturer_Minne
             //string exRight = "({[]})"; // This should return Balanced! it did
             string exRight = "[([)}]"; // this should return not Balanced, obviously... it was totally not balanced.
 
+
+            // calls method areBracketsBalanced to get a return value of true or false.
             if (areBracketsBalanced(exRight))      
                 Console.WriteLine("Brackets Are Balanced!");
             
@@ -337,33 +339,37 @@ namespace SkalProj_Datastrukturer_Minne
 
         private static Boolean areBracketsBalanced(string exRight)
         {
+            // this stack is where I push the paranthesis in to evaluate them in another method.
             Stack<char> stackFBrackets = new Stack<char>();
 
+            // loops through the length of the String to check for a starting bracket, then push that. If it didn't find a starting bracket it looks for an ending bracket to compare with.
             for (int i = 0; i < exRight.Length; i++)
             {
+                // pushes all the starting paranthesis into the stack
                 if (exRight[i] == '{' || exRight[i] == '(' || exRight[i] == '[')
                 {
                     stackFBrackets.Push(exRight[i]);
                 }
-
+                // if it's an ending paranthesis then it checks if the stack is empty and if they match the starting
                 if (exRight[i] == '}' || exRight[i] == ')' || exRight[i] == ']')
                 {
 
                     if (stackFBrackets.Count == 0) return false;
 
-
+                    
                     else if (!bracketsMatch(stackFBrackets.Pop(), exRight[i]))
                     {
                         return false;
                     }
                 }
             }
-
+            // if it hasn't returned false yet, and stack is empty, this must be true
             if (stackFBrackets.Count == 0) return true;
             else    
-                return false;  
+                return false;  // otherwise false 
         }
 
+        // this method returns true or false whether or not all brackets in the stack match.
         static Boolean bracketsMatch(char v1, char v2)
         {
             if (v1 == '(' && v2 == ')')
