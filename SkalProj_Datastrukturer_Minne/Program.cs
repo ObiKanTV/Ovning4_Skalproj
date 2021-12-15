@@ -295,7 +295,7 @@ namespace SkalProj_Datastrukturer_Minne
             string? input = Console.ReadLine();
             if (!String.IsNullOrWhiteSpace(input))
             {
-               input = input.Trim();
+                input = input.Trim();
                 Stack rTSStack = new Stack();
                 foreach (char c in input)
                 {
@@ -305,7 +305,7 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     revString += rTSStack.Pop();
                 }
-                    Console.WriteLine($"This is what I got: {revString}");
+                Console.WriteLine($"This is what I got: {revString}");
             }
             else { Console.WriteLine("You must enter a valid text"); }
 
@@ -319,12 +319,62 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+            //string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 };"; // This line should return Balanced!
+            string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 );"; // This line should return not balanced.
+
+
+
+            if (areBracketsBalanced(exRight))      
+                Console.WriteLine("Brackets Are Balanced!");
+            
+            else
+                Console.WriteLine("Brackets are not Balanced!");
 
             // ToDo: Make a plan in Corel for taking a string, making a char array, foreach loop to loop until it hits a {/(/[/]/)/} and then check so that the next one
             // is also of the same type. I will probably need several nested if-statements in the foreach loop. 
 
         }
 
+        private static Boolean areBracketsBalanced(string exRight)
+        {
+            Stack<char> stackFBrackets = new Stack<char>();
+
+            for (int i = 0; i < exRight.Length; i++)
+            {
+                if (exRight[i] == '{' || exRight[i] == '(' || exRight[i] == '[')
+                {
+                    stackFBrackets.Push(exRight[i]);
+                }
+
+                if (exRight[i] == '}' || exRight[i] == ')' || exRight[i] == ']')
+                {
+
+                    if (stackFBrackets.Count == 0) return false;
+
+
+                    else if (!bracketsMatch(stackFBrackets.Pop(), exRight[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (stackFBrackets.Count == 0) return true;
+            else    
+                return false;  
+        }
+
+        static Boolean bracketsMatch(char v1, char v2)
+        {
+            if (v1 == '(' && v2 == ')')
+                return true;
+            else if (v1 == '[' && v2 == ']')
+                return true;
+            else if (v1 == '{' && v2 == '}')
+                return true;
+            else
+                return false;
+        }
     }
 
 }
