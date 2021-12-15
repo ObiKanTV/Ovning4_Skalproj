@@ -319,10 +319,10 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
-            //string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 };"; // This line should return Balanced!
-            string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 );"; // This line should return not balanced.
-
-
+            //string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 };"; // This line should return Balanced! it did
+            //string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 );"; // This line should return not balanced. it did
+            //string exRight = "({[]})"; // This should return Balanced! it did
+            string exRight = "[([)}]"; // this should return not Balanced, obviously... it was totally not balanced.
 
             if (areBracketsBalanced(exRight))      
                 Console.WriteLine("Brackets Are Balanced!");
