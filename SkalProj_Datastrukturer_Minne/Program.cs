@@ -335,7 +335,7 @@ namespace SkalProj_Datastrukturer_Minne
         {
             bool isTrue = true;
 
-            string input = "";
+            string input;
             do
             {
                 Console.WriteLine("Input a Line of Code with Paranthesises you wish to check if balanced\ne.g List<int> list = new List<int>() { 1, 2, 3, 4 };" +
