@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace SkalProj_Datastrukturer_Minne
 {
+    // Ursäktar att jag gjorde allt i program-klassen. Kändes mer logiskt för övningen att dom ligger ish där.
     // Frågor 1-3 här nedan. 
     // Som i exemplet under dessa frågor har du två exempel, den första så deklarerar du values i klassnivå,
     // du deklarerar då två Integers vilket blir value types och dom lagras på stacken. 
@@ -16,13 +17,6 @@ namespace SkalProj_Datastrukturer_Minne
     // men du kan referera till ett object i heapen globalt.
     class Program
     {
-
-
-
-
-
-
-
         /// <summary>
         /// The main method, vill handle the menues for the program
         /// </summary>
@@ -169,11 +163,7 @@ namespace SkalProj_Datastrukturer_Minne
                 }
 
             } while (isModdingList);
-
-
-
         }
-
 
         /// <summary>
         /// Examines the datastructure Queue
@@ -196,8 +186,8 @@ namespace SkalProj_Datastrukturer_Minne
 
             Console.Clear();
             Console.WriteLine("===================ICA======================\n"
-                + "Welcome to ICA, You can enter people into the store with the + and a name\ne.g. +Rulle" +
-                "or you can serve the one first in line with -. type Q/q to quit to Main Menu");
+                + "Welcome to ICA, You can enter people into the store with the + and a name\ne.g. +Rulle. " +
+                "Or you can serve the one first in line with -. type Q/q to quit to Main Menu");
             // I did some copy paste with my previous code, Normally I would've made a validate Method with all these validations, but this time no.
             do
             {
@@ -215,56 +205,56 @@ namespace SkalProj_Datastrukturer_Minne
                 string valString = navString.ToUpper(); // I'm sure I could've done this better. Will come back later.
 
                 string value = input.Substring(1);
-                if (valString == "Q")
+                switch (valString)
                 {
-                    Console.Clear();
-                    isQueueing = false;
-                }
-                else
-                {
-
-                    switch (nav)
-                    {
-                        case '+':
-                            if (value.Length > 10) // several validation to make sure the user input is correct
-                            {
-                                Console.WriteLine("Please specify a name under 10 characters.");
+                    case "Q": // Originally did an if, but Intellisense suggested this Switch.
+                        Console.Clear();
+                        isQueueing = false;
+                        break;
+                    default:
+                        switch (nav)
+                        {
+                            case '+':
+                                if (value.Length > 10) // several validation to make sure the user input is correct
+                                {
+                                    Console.WriteLine("Please specify a name under 10 characters.");
+                                    break;
+                                }
+                                else if (value.Length < 2)
+                                {
+                                    Console.WriteLine("Please specify a name longer than 1 character.");
+                                    break;
+                                }
+                                else if (String.IsNullOrWhiteSpace(value))
+                                {
+                                    Console.WriteLine("You need to add a word. e.g +Adam or -Adam");
+                                }
+                                else
+                                {
+                                    Console.Clear(); // Console Clears are to make things easier to read. I hate cluttered consoles. even just for testing.
+                                    queue.Enqueue(value);
+                                    Console.WriteLine($"{value} has now entered our store, They grabbed what they wanted from the shelves and is now in Queue." +
+                                        " You can continue queue/dequeue people or Q/q to quit to Main Menu");
+                                }
                                 break;
-                            }
-                            else if (value.Length < 2)
-                            {
-                                Console.WriteLine("Please specify a name longer than 1 character.");
+                            case '-':
+
+                                if (queue.TryDequeue(out value!)) // added an if-statement here to make sure the user actually removes something and tells the user if they did. 
+                                {
+                                    Console.WriteLine($"{value} have successfully been served and is now leaving our store.\nYou can continue to queue/dequeue people or" +
+                                        "press Q/q to exit to the Main Menu");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"There was no person in the store, You can add someone with the + followed by a Name e.g. +Jocke or Q/q to exit.");
+                                }
                                 break;
-                            }
-                            else if (String.IsNullOrWhiteSpace(value))
-                            {
-                                Console.WriteLine("You need to add a word. e.g +Adam or -Adam");
-                            }
-                            else
-                            {
-                                Console.Clear(); // Console Clears are to make things easier to read. I hate cluttered consoles. even just for testing.
-                                queue.Enqueue(value);
-                                Console.WriteLine($"{value} has now entered our store, They grabbed what they wanted from the shelves and is now in Queue." +
-                                    " You can continue queue/dequeue people or Q/q to quit to Main Menu");
-                            }
-                            break;
-                        case '-':
 
-                            if (queue.TryDequeue(out value!)) // added an if-statement here to make sure the user actually removes something and tells the user if they did. 
-                            {
-                                Console.WriteLine($"{value} have successfully been served and is now leaving our store.\nYou can continue to queue/dequeue people or" +
-                                    "press Q/q to exit to the Main Menu");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"There was no person in the store, You can add someone with the + followed by a Name e.g. +Jocke or Q/q to exit.");
-                            }
-                            break;
-
-                        default:
-                            Console.WriteLine("I want you to input a + or - followed by a Name e.g. +Penny. Unless you want to quit, then Q/q.");
-                            break;
-                    }
+                            default:
+                                Console.WriteLine("I want you to input a + or - followed by a Name e.g. +Penny. Unless you want to quit, then Q/q.");
+                                break;
+                        }
+                        break;
                 }
 
             } while (isQueueing);
@@ -322,19 +312,66 @@ namespace SkalProj_Datastrukturer_Minne
             //string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 };"; // This line should return Balanced! it did
             //string exRight = "List<int> list = new List<int>() { 1, 2, 3, 4 );"; // This line should return not balanced. it did
             //string exRight = "({[]})"; // This should return Balanced! it did
-            string exRight = "[([)}]"; // this should return not Balanced, obviously... it was totally not balanced.
+            //string exRight = "[([)}]"; // this should return not Balanced, obviously... it was totally not balanced.
+            string result = "";
 
+            while (ValidateUserInput(out result))
+            {
+                if (areBracketsBalanced(result))
+                    Console.WriteLine("Brackets Are Balanced!");
 
+                else
+                    Console.WriteLine("Brackets are not Balanced!");
+            }
             // calls method areBracketsBalanced to get a return value of true or false.
-            if (areBracketsBalanced(exRight))      
-                Console.WriteLine("Brackets Are Balanced!");
-            
-            else
-                Console.WriteLine("Brackets are not Balanced!");
 
-            // ToDo: Make a plan in Corel for taking a string, making a char array, foreach loop to loop until it hits a {/(/[/]/)/} and then check so that the next one
-            // is also of the same type. I will probably need several nested if-statements in the foreach loop. 
+            // Done=>ToDo: Make a plan in Corel for taking a string, making a char array, foreach loop to loop until it hits a {/(/[/]/)/} and then check so that the next one
+            // is also of the same type. I will probably need several nested if-statements in the foreach loop. // This is done according to plan
 
+        }
+
+        private static bool ValidateUserInput(out string result) // same thing here, This is a copy paste almost of other Validate things I wrote earlier. 
+                                                                 // however they are still pretty unique. For a real project I would make a Validate Class with its own Methods that handles user input.
+        {
+            bool isTrue = true;
+
+            string input = "";
+            do
+            {
+                Console.WriteLine("Input a Line of Code with Paranthesises you wish to check if balanced\ne.g List<int> list = new List<int>() { 1, 2, 3, 4 };" +
+                    "\nUnless you're full of instant regret and want to return to Main Menu, then typ Q/q:");
+                input = Console.ReadLine()!;
+                if (String.IsNullOrEmpty(input))
+                {
+                    Console.Clear();
+                    Console.WriteLine("We need a valid input. Please Input some paranthesis you wish to validate\ne.g. [([)}]\n");
+                    continue;
+                }
+                char nav = input[0];
+                string navString = nav.ToString(); // this validation is to make sure you can type Q or q as well to exit.   
+                string valString = navString.ToUpper(); // I'm sure I could've done this better.
+
+                string value = input.Substring(1);
+                if (valString == "Q")
+                {
+                    Console.Clear();
+                    result = " ";
+                    isTrue = false;
+                    return false;
+                }
+                if (input.Length < 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Your input is less than the required lenght of 2.\n");
+                    continue;
+                }
+                else
+                {
+                    isTrue = false;
+                }
+            } while (isTrue);
+            result = input;
+            return true;
         }
 
         private static Boolean areBracketsBalanced(string exRight)
@@ -356,7 +393,7 @@ namespace SkalProj_Datastrukturer_Minne
 
                     if (stackFBrackets.Count == 0) return false;
 
-                    
+
                     else if (!bracketsMatch(stackFBrackets.Pop(), exRight[i]))
                     {
                         return false;
@@ -365,7 +402,7 @@ namespace SkalProj_Datastrukturer_Minne
             }
             // if it hasn't returned false yet, and stack is empty, this must be true
             if (stackFBrackets.Count == 0) return true;
-            else    
+            else
                 return false;  // otherwise false 
         }
 
