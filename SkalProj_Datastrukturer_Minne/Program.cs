@@ -90,7 +90,8 @@ namespace SkalProj_Datastrukturer_Minne
             Console.WriteLine($"--------------------------------Welcome--------------------------------" +
                                "\nTo add something to the list type + followed by its name. e.g +Adam" +
                                "\nTo remove something, simply type - followed by its name. e.g -Adam" +
-                               "\nTo exit back to the menu, type Q/q" +
+                               "\nTo exit back to the menu, type Q/q." +
+                               "\nTo print a list of all names in list, type P/p." +
                                "\n=====================================================================");
 
             // notering, använde mig inte av Capacity Metoden, Capacity syns i debuggern om du har theList på view under RAW. 
@@ -105,9 +106,10 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 string? input = Console.ReadLine();
 
-                if (input == null)
+                if (String.IsNullOrWhiteSpace(input))
                 {
-                    throw new Exception("Must Input a +/- followed by a word or name e.g. +Banana");
+                    Console.WriteLine("You must enter a valid input.");
+                    continue;
                 }
                 input = input.Trim();
                 char nav = input[0];
@@ -117,20 +119,32 @@ namespace SkalProj_Datastrukturer_Minne
                 string valString = navString.ToUpper();
 
                 string value = input.Substring(1);
-                if (valString == "Q")
+                if (valString.StartsWith('Q'))
                 {
                     Console.Clear();
                     isModdingList = false;
+                    break;
                 }
-                else if (value.Length > 10) // several validation to make sure the user input is correct
+                else if (valString.StartsWith('P'))
+                {
+                    Console.WriteLine("This is the complete List:\n");
+                    for (int i = 0; i < theList.Count; i++)
+                    {
+                        Console.WriteLine($"{i+1}. {theList[i]}");
+                    }
+                    Console.WriteLine("You can continue to add/ remove from the list, Type P/p to print the list\n"+
+                                "or press Q/q to exit to the Main Menu");
+                    continue;
+                }
+                if (value.Length > 10) // several validation to make sure the user input is correct
                 {
                     Console.WriteLine("Please specify a name under 10 characters.");
-                    break;
+                    continue;
                 }
                 else if (value.Length < 2)
                 {
                     Console.WriteLine("Please specify a name longer than 1 character.");
-                    break;
+                    continue;
                 }
                 else if (String.IsNullOrWhiteSpace(value))
                 {
@@ -141,14 +155,14 @@ namespace SkalProj_Datastrukturer_Minne
                     case '+':
                         Console.Clear(); // Console Clears are to make things easier to read. I hate cluttered consoles. even just for testing.
                         theList.Add(value);
-                        Console.WriteLine($"Added {value} to the List. You can continue add/remove from the list or Q/q to quit to Main Menu");
+                        Console.WriteLine($"Added {value} to the List. You can continue add/remove from the list, Type P/p to print the list\nor Q/q to quit to Main Menu");
 
                         break;
                     case '-':
 
                         if (theList.Remove(value)) // added an if-statement here to make sure the user actually removes something and tells the user if they did. 
                         {
-                            Console.WriteLine($"{value} has been succesfully removed from the list\nYou can continue to add/remove from the list or" +
+                            Console.WriteLine($"{value} has been succesfully removed from the list\nYou can continue to add/remove from the list, Type P/p to print the list\nor" +
                                 "press Q/q to exit to the Main Menu");
                         }
                         else
@@ -158,8 +172,8 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
 
                     default:
-                        Console.WriteLine("I want you to input a + or - followed by a word e.g. +Pie. Unless you want to quit, then Q/q.");
-                        break;
+                        Console.WriteLine("I want you to input a + or - followed by a word e.g. +Pie. \nUnless you want to quit, then Q/q.");
+                        continue;
                 }
 
             } while (isModdingList);
@@ -193,9 +207,10 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 string? input = Console.ReadLine();
 
-                if (input == null)
+                if (String.IsNullOrWhiteSpace(input))
                 {
-                    throw new Exception("Must Input a +/- followed by a name e.g. +Anna");
+                    Console.WriteLine("You must enter a valid input.");
+                    continue;
                 }
                 input = input.Trim();
                 char nav = input[0];
@@ -218,22 +233,23 @@ namespace SkalProj_Datastrukturer_Minne
                                 if (value.Length > 10) // several validation to make sure the user input is correct
                                 {
                                     Console.WriteLine("Please specify a name under 10 characters.");
-                                    break;
+                                    continue;
                                 }
                                 else if (value.Length < 2)
                                 {
                                     Console.WriteLine("Please specify a name longer than 1 character.");
-                                    break;
+                                    continue;
                                 }
                                 else if (String.IsNullOrWhiteSpace(value))
                                 {
                                     Console.WriteLine("You need to add a word. e.g +Adam or -Adam");
+                                    continue;
                                 }
                                 else
                                 {
                                     Console.Clear(); // Console Clears are to make things easier to read. I hate cluttered consoles. even just for testing.
                                     queue.Enqueue(value);
-                                    Console.WriteLine($"{value} has now entered our store, They grabbed what they wanted from the shelves and is now in Queue." +
+                                    Console.WriteLine($"{value} has now entered our store, They grabbed what they wanted from the shelves and is now in Queue.\n" +
                                         " You can continue queue/dequeue people or Q/q to quit to Main Menu");
                                 }
                                 break;
@@ -251,7 +267,7 @@ namespace SkalProj_Datastrukturer_Minne
                                 break;
 
                             default:
-                                Console.WriteLine("I want you to input a + or - followed by a Name e.g. +Penny. Unless you want to quit, then Q/q.");
+                                Console.WriteLine("I want you to input a + or - followed by a Name e.g. +Penny.\n Unless you want to quit, then Q/q.");
                                 break;
                         }
                         break;
